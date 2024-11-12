@@ -1,0 +1,122 @@
+# Blender 4.2.2 LTS MTL File: 'chess_set.blend'
+# www.blender.org
+
+newmtl wooddark0
+Ns 4.737719
+Ka 1.000000 1.000000 1.000000
+Ks 0.607843 0.607843 0.607843
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/Maxch/Desktop/GeorgiaTech/ece-6122/ogl/Lab3/Chess/wooddark0.bmp
+
+newmtl wooddark1
+Ns 4.737719
+Ka 1.000000 1.000000 1.000000
+Ks 0.607843 0.607843 0.607843
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/Maxch/Desktop/GeorgiaTech/ece-6122/ogl/Lab3/Chess/wooddark1.bmp
+
+newmtl wooddark2
+Ns 4.737719
+Ka 1.000000 1.000000 1.000000
+Ks 0.607843 0.607843 0.607843
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/Maxch/Desktop/GeorgiaTech/ece-6122/ogl/Lab3/Chess/wooddark2.bmp
+
+newmtl wooddark3
+Ns 4.737719
+Ka 1.000000 1.000000 1.000000
+Ks 0.607843 0.607843 0.607843
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/Maxch/Desktop/GeorgiaTech/ece-6122/ogl/Lab3/Chess/wooddark3.bmp
+
+newmtl wooddark4
+Ns 4.737719
+Ka 1.000000 1.000000 1.000000
+Ks 0.607843 0.607843 0.607843
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/Maxch/Desktop/GeorgiaTech/ece-6122/ogl/Lab3/Chess/wooddark4.bmp
+
+newmtl wooddark5
+Ns 4.737719
+Ka 1.000000 1.000000 1.000000
+Ks 0.607843 0.607843 0.607843
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/Maxch/Desktop/GeorgiaTech/ece-6122/ogl/Lab3/Chess/wooddark5.bmp
+
+newmtl woodlight0
+Ns 37.007111
+Ka 1.000000 1.000000 1.000000
+Ks 0.607843 0.607843 0.607843
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/Maxch/Desktop/GeorgiaTech/ece-6122/ogl/Lab3/Chess/woodlight0.bmp
+
+newmtl woodlight1
+Ns 37.007111
+Ka 1.000000 1.000000 1.000000
+Ks 0.607843 0.607843 0.607843
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/Maxch/Desktop/GeorgiaTech/ece-6122/ogl/Lab3/Chess/woodlight1.bmp
+
+newmtl woodlight2
+Ns 37.007111
+Ka 1.000000 1.000000 1.000000
+Ks 0.607843 0.607843 0.607843
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/Maxch/Desktop/GeorgiaTech/ece-6122/ogl/Lab3/Chess/woodlight2.bmp
+
+newmtl woodlight3
+Ns 37.007111
+Ka 1.000000 1.000000 1.000000
+Ks 0.607843 0.607843 0.607843
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/Maxch/Desktop/GeorgiaTech/ece-6122/ogl/Lab3/Chess/woodlight3.bmp
+
+newmtl woodlight4
+Ns 37.007111
+Ka 1.000000 1.000000 1.000000
+Ks 0.607843 0.607843 0.607843
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/Maxch/Desktop/GeorgiaTech/ece-6122/ogl/Lab3/Chess/woodlight4.bmp
+
+newmtl woodlight5
+Ns 37.007111
+Ka 1.000000 1.000000 1.000000
+Ks 0.607843 0.607843 0.607843
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/Maxch/Desktop/GeorgiaTech/ece-6122/ogl/Lab3/Chess/woodlight5.bmp
