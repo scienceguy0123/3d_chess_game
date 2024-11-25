@@ -14,9 +14,12 @@
 #include "Bishop.h"
 #include "King.h"
 #include "Queen.h"
+#include "RenderBoard.h"
 
 void loadPieces(std::vector<Chess>& pieces, GLuint programID, Board& board);
 void inputThreadFunction();
-CommandType ParseCommand();
+CommandType ParseCommand(Board& Board, GLuint programID);
 std::pair<int, int> convertToCoordinate(std::string pos);
+bool checkCheckMate(Board& board, bool debug=false);
+
 #endif

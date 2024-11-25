@@ -2,7 +2,8 @@
 #include "RenderBoard.h"
 
 
-Rook::Rook(char* path, GLuint programID, bool color, std::string MaterialName) : Chess(path, programID, color, MaterialName) {
+Rook::Rook(char* path, GLuint programID, bool color, std::string MaterialName, std::string PieceName)
+	: Chess(path, programID, color, MaterialName, PieceName) {
 }
 
 bool Rook::CheckMoveValid(Board& board, std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal)  {

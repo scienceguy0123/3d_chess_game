@@ -19,11 +19,13 @@ Chess::Chess(
 	std::string path,
 	GLuint programID,
 	bool color,
-	std::string MaterialName
+	std::string MaterialName,
+	std::string PieceName
 ) 
 {
 	this->color = color;
 	this->MaterialName = MaterialName;
+	this->PieceName = PieceName;
 
 	bool res = loadAssImpChess(path.c_str(), this->indices, this->indexed_vertices, this->indexed_uvs, this->indexed_normals);
 	//GLuint vertexbuffer;
@@ -306,7 +308,10 @@ void Chess::clean() {
 };
 
 
-bool Chess::VeriticalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal, int MaxStep  ) {
+bool Chess::VeriticalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal, int direction,  int MaxStep  ) {
+	//direction 1 is from black to white
+	// direction 2 is from white to black
+	// direction 3 is all direction
 	if (MaxStep == 0) {
 		if (PosPairFinal.second == PosPairOriginal.second) {
 			return true;
@@ -314,35 +319,61 @@ bool Chess::VeriticalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, i
 		return false;
 	}
 	else {
-		if (MaxStep > 0) {
+		if (direction == 1) {
+			std::cout << "black to white vertical move " << MaxStep << std::endl;
+
 			if (
-				PosPairFinal.first - PosPairOriginal.first > MaxStep
-				|| (PosPairFinal.first - PosPairOriginal.first) < 0
+				abs(PosPairFinal.first - PosPairOriginal.first ) <= MaxStep
+				&& (PosPairFinal.first - PosPairOriginal.first) < 0
+				) {
+				return true;
+			}
+			std::cout << "black to white vertical move return false " << MaxStep << std::endl;
+
+			return false;
+		}
+		else if (direction == 2) {
+			std::cout << "white to black vertical move " << std::endl;
+
+			if (
+				abs(PosPairFinal.first - PosPairOriginal.first) <= MaxStep
+				&& (PosPairFinal.first - PosPairOriginal.first) > 0
+				) {
+				return true;
+			}
+			return false;
+		}
+		else {
+			if (
+				abs(PosPairFinal.first - PosPairOriginal.first > MaxStep) > MaxStep
 				) {
 				return false;
 			}
 			return true;
 		}
-		else if (MaxStep < 0) {
-			if (
-				PosPairFinal.first - PosPairOriginal.first < MaxStep
-				|| (PosPairFinal.first - PosPairOriginal.first) > 0
-				) {
-				return false;
-			}
-			return true;
-		}
+
 	}
 };
 
-bool Chess::HorizontalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal) {
-	if (PosPairFinal.first == PosPairOriginal.first) {
-		return true;
+bool Chess::HorizontalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal, int MaxStep) {
+	if (MaxStep == 0) {
+		if (PosPairFinal.first == PosPairOriginal.first) {
+			return true;
+		}
+		return false;
 	}
-	return false;
+	else {
+		if (
+			PosPairFinal.first == PosPairOriginal.first
+			&& abs(PosPairFinal.second - PosPairOriginal.second) <= MaxStep) {
+			return true;
+		}
+		return false;
+	}
+	
 }
 
-bool Chess::DiagonalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal, int direction = 2, int MaxStep = 15) {
+bool Chess::DiagonalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal, int direction , int MaxStep ) {
 	// direction 0: only from black to white
 	// direction 1: only from white to black
 	// direction 2: all direction
@@ -386,6 +417,12 @@ bool Chess::DiagonalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, in
 					&& PosPairOriginal.second + i == PosPairFinal.second)
 				||
 				(PosPairOriginal.first - i == PosPairFinal.first
+					&& PosPairOriginal.second - i == PosPairFinal.second)
+				||
+				(PosPairOriginal.first - i == PosPairFinal.first
+					&& PosPairOriginal.second + i == PosPairFinal.second)
+				||
+				(PosPairOriginal.first + i == PosPairFinal.first
 					&& PosPairOriginal.second - i == PosPairFinal.second)
 			) {
 				return true;

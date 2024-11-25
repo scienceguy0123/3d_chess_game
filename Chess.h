@@ -62,11 +62,12 @@ public:
     Chess();
    
 
-   Chess(
-       std::string path,
-       GLuint programID,
-       bool color,
-       std::string MaterialName
+    Chess(
+        std::string path,
+        GLuint programID,
+        bool color,
+        std::string MaterialName,
+        std::string PieceName
    );
 
    Chess(Chess&& other) noexcept;
@@ -80,12 +81,12 @@ public:
 
     bool calculateCurrentTranslateVector();
 
-    bool VeriticalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal, int MaxStep = 0  );
+    bool VeriticalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal, int direction = 2, int MaxStep = 0  );
     
 
-    bool HorizontalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal);
+    bool HorizontalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal, int MaxStep = 0);
 
-    bool DiagonalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal, int direction, int MaxStep);
+    bool DiagonalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal, int direction = 2, int MaxStep = 15);
 
     bool PieceInRoute(Board& board, std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal);
 

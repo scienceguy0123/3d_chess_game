@@ -2,7 +2,22 @@
 #include "RenderBoard.h"
 
 
-Knight::Knight(char* path, GLuint programID, bool color, std::string MaterialName) : Chess(path, programID, color, MaterialName) {
+Knight::Knight(char* path, GLuint programID, bool color, std::string MaterialName, std::string PieceName)
+	: Chess(path, programID, color, MaterialName, PieceName) {
+}
+
+
+bool Knight::CheckMoveValid(Board& board, std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal) {
+	if (
+		(abs(PosPairOriginal.second - PosPairFinal.second) == 2
+			&& abs(PosPairOriginal.first - PosPairFinal.first) == 1)
+		||
+		(abs(PosPairOriginal.first - PosPairFinal.first) == 2
+			&& abs(PosPairOriginal.second - PosPairFinal.second) == 1)
+		) {
+		return true;
+	}
+	return false;
 }
 
 /// <summary>

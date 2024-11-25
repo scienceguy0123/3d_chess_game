@@ -8,7 +8,8 @@ Class for Pawn
 #include "Pawn.h"
 #include "RenderBoard.h"
 
-Pawn::Pawn(char* path, GLuint programID, bool color, std::string MaterialName) : Chess(path, programID, color, MaterialName) {
+Pawn::Pawn(char* path, GLuint programID, bool color, std::string MaterialName, std::string PieceName)
+	: Chess(path, programID, color, MaterialName, PieceName) {
 }
 
 
@@ -44,13 +45,13 @@ bool Pawn::CheckMoveValid(Board& board, std::pair<int, int>& PosPairOriginal, st
 
 	if (this->color) {
 		
-		if (!VeriticalMove(PosPairOriginal, PosPairFinal, this->firstMove ? 2 : 1)) {
+		if (!VeriticalMove(PosPairOriginal, PosPairFinal, 2, this->firstMove ? 2 : 1)) {
 			return false;
 		}
 	}
 	else {
 		
-		if (!VeriticalMove(PosPairOriginal, PosPairFinal, this->firstMove ? -2 : -1)) {
+		if (!VeriticalMove(PosPairOriginal, PosPairFinal, 1, this->firstMove ? 2 : 1)) {
 			return false;
 		}
 	}

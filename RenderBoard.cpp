@@ -283,6 +283,16 @@ void Board::RemovePiece(std::pair<int, int>& PosPairOriginal) {
 	}
 }
 
+void Board::RemoveAll() {
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			if (this->Coordinates[i][j].hasPiece) {
+				this->Coordinates[i][j].hasPiece = false;
+			}
+		}
+	}
+}
+
 void Board::RenderBoard( glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint MatrixID, GLuint ViewMatrixID, GLuint ModelMatrixID) {
 
 	

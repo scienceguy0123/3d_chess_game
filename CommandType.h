@@ -8,7 +8,10 @@ enum CommandType {
 	Invalid,
 	Remove,
 	Coor,
-	MV
+	MV,
+	RemoveAll,
+	CheckMate,
+	Restart
 };
 
 #endif

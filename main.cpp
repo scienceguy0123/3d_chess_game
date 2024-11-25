@@ -149,8 +149,16 @@ int main(void)
 	ReceiveCommand = false;
 	std::thread inputThread(inputThreadFunction);
 	
+	bool checkMated = false;
+
 	do {
 
+		if (!checkMated) {
+			if (checkCheckMate(board)) {
+				checkMated = true;
+				std::cout << "Please enter quit to exit program" << std::endl;
+			}
+		}
 
 		if (firstRun) {
 			defaultProjectionMatrix();
@@ -161,9 +169,9 @@ int main(void)
 
 		if (ReceiveCommand) {
 			std::cout << "command was: " << InputCommand << std::endl;
-			auto CommandType = ParseCommand();
+			auto CommandType = ParseCommand(board, programID);
 
-			if (CommandType == Move) {
+			if (CommandType == Move && !checkMated) {
 				board.MovePiece(PosPairOriginal, PosPairFinal);
 			}
 
@@ -174,6 +182,20 @@ int main(void)
 
 			else if (CommandType == Remove) {
 				board.RemovePiece(PosPairOriginal);
+			}
+
+			else if (CommandType == RemoveAll) {
+				board.RemoveAll();
+			}
+
+			else if (CommandType == CheckMate) {
+				checkCheckMate(board, true);
+			}
+
+			else if (CommandType == Restart) {
+				checkMated = false;
+				board.RemoveAll();
+				loadPieces(pieces, programID, board);
 			}
 
 			ReceiveCommand = false;

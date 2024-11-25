@@ -65,6 +65,8 @@ struct Board {
 
 	void RemovePiece(std::pair<int, int>& PosPairOriginal);
 
+	void RemoveAll();
+
 	/// <summary>
 	/// clean board
 	/// </summary>
