@@ -11,7 +11,8 @@ enum CommandType {
 	MV,
 	RemoveAll,
 	CheckMate,
-	Restart
+	Restart,
+	Quit
 };
 
 #endif

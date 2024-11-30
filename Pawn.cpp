@@ -8,13 +8,27 @@ Class for Pawn
 #include "Pawn.h"
 #include "RenderBoard.h"
 
+/// <summary>
+/// constructor
+/// </summary>
+/// <param name="path">path</param>
+/// <param name="programID">programID</param>
+/// <param name="color">color</param>
+/// <param name="MaterialName">MaterialName</param>
+/// <param name="PieceName">PieceName</param>
 Pawn::Pawn(char* path, GLuint programID, bool color, std::string MaterialName, std::string PieceName)
 	: Chess(path, programID, color, MaterialName, PieceName) {
 }
 
 
 
-
+/// <summary>
+/// check move valid
+/// </summary>
+/// <param name="board">board</param>
+/// <param name="PosPairOriginal">PosPairOriginal</param>
+/// <param name="PosPairFinal">PosPairFinal</param>
+/// <returns>bool</returns>
 bool Pawn::CheckMoveValid(Board& board, std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal) {
 	//std::cout << "PosPairFinal.first: " << PosPairFinal.first << " PosPairOriginal.first: " << PosPairOriginal.first << std::endl;
 	//std::cout << "PosPairFinal.second: " << PosPairFinal.second << " PosPairOriginal.second: " << PosPairOriginal.second << std::endl;

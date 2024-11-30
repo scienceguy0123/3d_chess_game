@@ -1,8 +1,19 @@
+/*
+Author: Hsueh-Yuan Chou
+Class: ECE6122
+Last Date Modified: 11/30/2024
+Description:
+What is the purpose of this file?
+Coordinate header file
+*/
 #ifndef COORDINATE_H
 #define COORDINATE_H
 
 #include "Chess.h"
 
+/// <summary>
+/// Coordinate class
+/// </summary>
 struct Coordinate {
 	int row;
 	int column;

@@ -43,12 +43,19 @@ using namespace glm;
 #include "Helper.h"
 
 #include "GlobalVariables.h"
+#include "ECE_ChessEngine.h"
 
 bool ReceiveCommand;
 std::string InputCommand;
 std::pair<int, int> PosPairOriginal;
 std::pair<int, int> PosPairFinal;
+bool showPrompt;
 
+/// <summary>
+/// main function
+/// </summary>
+/// <param name=""></param>
+/// <returns></returns>
 int main(void)
 {
 	// Initialize GLFW
@@ -130,6 +137,8 @@ int main(void)
 
 
 
+	ECE_ChessEngine engine;
+	engine.InitializeEngine();
 
 
 
@@ -137,6 +146,7 @@ int main(void)
 	glUseProgram(programID);
 	GLuint LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
 	GLuint ModeID = glGetUniformLocation(programID, "mode");
+	GLuint lightPowerId = glGetUniformLocation(programID, "LightPower2");
 	bool Mode = true;
 
 	// For speed computation
@@ -150,13 +160,19 @@ int main(void)
 	std::thread inputThread(inputThreadFunction);
 	
 	bool checkMated = false;
+	bool animating = false;
+
+	bool engineRound = false;
+	int animatingCounter = 0;
+	showPrompt = true;
+
 
 	do {
 
 		if (!checkMated) {
 			if (checkCheckMate(board)) {
 				checkMated = true;
-				std::cout << "Please enter quit to exit program" << std::endl;
+				std::cout << "Please enter quit to exit program: " << std::endl;
 			}
 		}
 
@@ -167,14 +183,38 @@ int main(void)
 
 		firstRun = false;
 
-		if (ReceiveCommand) {
-			std::cout << "command was: " << InputCommand << std::endl;
+		if (animating) {
+			if (animatingCounter >= 100) {
+				animatingCounter = 0;
+				animating = false;
+			}
+			animatingCounter += 1;
+		}
+
+		if (!animating && engineRound && !checkMated) {
+			std::string response;
+			engine.getResponseMove(response);
+		
+			
+			board.MovePiece(PosPairOriginal, PosPairFinal);
+			engineRound = false;
+			animating = true;
+		}
+
+		if (!animating && ReceiveCommand && !engineRound ) {
+			showPrompt = true;
 			auto CommandType = ParseCommand(board, programID);
 
 			if (CommandType == Move && !checkMated) {
-				board.MovePiece(PosPairOriginal, PosPairFinal);
+				if (!board.MovePiece(PosPairOriginal, PosPairFinal)) {
+					ReceiveCommand = false;
+					continue;
+				}
+				engine.sendMove(InputCommand); 
+				engineRound = true;
+				animating = true;
+				showPrompt = false;
 			}
-
 
 			else if (CommandType == MV) {
 				board.MvPiece(PosPairOriginal, PosPairFinal);
@@ -189,6 +229,7 @@ int main(void)
 			}
 
 			else if (CommandType == CheckMate) {
+				std::cout << engine.moves << std::endl;
 				checkCheckMate(board, true);
 			}
 
@@ -197,19 +238,17 @@ int main(void)
 				board.RemoveAll();
 				loadPieces(pieces, programID, board);
 			}
-
+			else if (CommandType == Quit) {
+				glfwTerminate();
+				return 0;
+			}
+			
 			ReceiveCommand = false;
+			
+			
 		}
 
-		// Measure speed
-		/*double currentTime = glfwGetTime();
-		nbFrames++;*/
-		//if (currentTime - lastTime >= 1.0) { // If last prinf() was more than 1sec ago
-		//	// printf and reset
-		//	printf("%f ms/frame\n", 1000.0 / double(nbFrames));
-		//	nbFrames = 0;
-		//	lastTime += 1.0;
-		//}
+	
 
 		// Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -236,6 +275,10 @@ int main(void)
 
 		glm::vec3 lightPos = getLightPos();
 		glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);
+
+
+
+		glUniform1f(lightPowerId, getLightPower());
 
 		board.RenderBoard(ProjectionMatrix, ViewMatrix, MatrixID, ViewMatrixID, ModelMatrixID);
 

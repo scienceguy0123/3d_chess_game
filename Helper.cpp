@@ -1,7 +1,25 @@
+/*
+Author: Hsueh-Yuan Chou
+Class: ECE6122
+Last Date Modified: 11/30/2024
+Description:
+What is the purpose of this file?
+Helper CPP file
+*/
+
 #include "Helper.h"
 
 
-
+/// <summary>
+/// check under attack
+/// </summary>
+/// <param name="board">board</param>
+/// <param name="i">i</param>
+/// <param name="j">j</param>
+/// <param name="color">color</param>
+/// <param name="debug">debug</param>
+/// <param name="recursive">recursive</param>
+/// <returns></returns>
 bool checkUnderAttack(Board& board, int i, int j, bool color, bool debug, bool recursive) {
 	
 
@@ -404,12 +422,20 @@ bool checkUnderAttack(Board& board, int i, int j, bool color, bool debug, bool r
 
 }
 
+/// <summary>
+/// check surrounding under attack
+/// </summary>
+/// <param name="board">board</param>
+/// <param name="i">i</param>
+/// <param name="j">j</param>
+/// <param name="debug">debug</param>
+/// <returns>bool</returns>
 bool checkSurroundingUndetAttack(Board& board, int i, int j, bool debug ) {
 	int underAttackCount = 0;
 	int friendlyOccuipied = 0;
 	if (i - 1 >= 0 && j - 1 >= 0) {
 		if (
-			checkUnderAttack(board, i - 1, j - 1, board.Coordinates[i][j].Piece->color, debug, true)) {
+			checkUnderAttack(board, i - 1, j - 1, board.Coordinates[i][j].Piece->color, debug, false)) {
 			underAttackCount++;
 		}
 		else if (
@@ -424,7 +450,7 @@ bool checkSurroundingUndetAttack(Board& board, int i, int j, bool debug ) {
 	}
 	
 	if (i - 1 >= 0) {
-		if (checkUnderAttack(board, i - 1, j, board.Coordinates[i][j].Piece->color, debug, true)) {
+		if (checkUnderAttack(board, i - 1, j, board.Coordinates[i][j].Piece->color, debug, false)) {
 			underAttackCount++;
 		}
 		else if (
@@ -439,7 +465,7 @@ bool checkSurroundingUndetAttack(Board& board, int i, int j, bool debug ) {
 	}
 
 	if (i - 1 >= 0 && j + 1 <= 7) {
-		if (checkUnderAttack(board, i - 1, j + 1, board.Coordinates[i][j].Piece->color, debug, true)) {
+		if (checkUnderAttack(board, i - 1, j + 1, board.Coordinates[i][j].Piece->color, debug, false)) {
 			underAttackCount++;
 		}
 		else if (
@@ -454,7 +480,7 @@ bool checkSurroundingUndetAttack(Board& board, int i, int j, bool debug ) {
 	}
 
 	if (j - 1 >= 0) {
-		if (checkUnderAttack(board, i, j - 1, board.Coordinates[i][j].Piece->color, debug, true)) {
+		if (checkUnderAttack(board, i, j - 1, board.Coordinates[i][j].Piece->color, debug, false)) {
 			underAttackCount++;
 		}
 		else if (
@@ -471,7 +497,7 @@ bool checkSurroundingUndetAttack(Board& board, int i, int j, bool debug ) {
 
 
 	if (j + 1 <= 7) {
-		if (checkUnderAttack(board, i, j + 1, board.Coordinates[i][j].Piece->color, debug, true)) {
+		if (checkUnderAttack(board, i, j + 1, board.Coordinates[i][j].Piece->color, debug, false)) {
 			underAttackCount++;
 		}
 		else if (
@@ -486,7 +512,7 @@ bool checkSurroundingUndetAttack(Board& board, int i, int j, bool debug ) {
 	}
 
 	if (i + 1 <= 7 && j - 1 >=0) {
-		if (checkUnderAttack(board, i + 1, j - 1, board.Coordinates[i][j].Piece->color, debug, true)) {
+		if (checkUnderAttack(board, i + 1, j - 1, board.Coordinates[i][j].Piece->color, debug, false)) {
 			underAttackCount++;
 		}
 		else if (
@@ -501,7 +527,7 @@ bool checkSurroundingUndetAttack(Board& board, int i, int j, bool debug ) {
 	}
 
 	if (i + 1 <= 7) {
-		if (checkUnderAttack(board, i + 1, j, board.Coordinates[i][j].Piece->color, debug, true)) {
+		if (checkUnderAttack(board, i + 1, j, board.Coordinates[i][j].Piece->color, debug, false)) {
 			underAttackCount++;
 		}
 		else if (
@@ -516,7 +542,7 @@ bool checkSurroundingUndetAttack(Board& board, int i, int j, bool debug ) {
 	}
 
 	if (i + 1 <= 7 && j +1 <=7) {
-		if (checkUnderAttack(board, i + 1, j +1, board.Coordinates[i][j].Piece->color, debug, true)) {
+		if (checkUnderAttack(board, i + 1, j +1, board.Coordinates[i][j].Piece->color, debug, false)) {
 			underAttackCount++;
 		}
 		else if (
@@ -546,26 +572,31 @@ bool checkSurroundingUndetAttack(Board& board, int i, int j, bool debug ) {
 	
 }
 
+/// <summary>
+/// check check mate
+/// </summary>
+/// <param name="board">board</param>
+/// <param name="debug">debug</param>
+/// <returns>bool</returns>
 bool checkCheckMate(Board& board, bool debug) {
-	if (debug) {
-		//std::cout << "check check mate1" << std::endl;
-	}
+	
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
 			auto& coor = board.Coordinates[i][j];
 			if (
 				coor.hasPiece
 				&& coor.Piece->PieceName == "king"
+				&& checkUnderAttack(board, i, j, coor.Piece->color,false, false)
 				) {
 				if (debug) {
 					std::cout << "check check mate" << std::endl;
 				}
 				if (checkSurroundingUndetAttack(board, i, j, debug)) {
 					if (coor.Piece->color) {
-						std::cout << "CheckMate, white wins" << std::endl;
+						std::cout << "\nCheckMate, black wins" << std::endl;
 					}
 					else {
-						std::cout << "CheckMate, black wins" << std::endl;
+						std::cout << "\nCheckMate, white wins" << std::endl;
 					}
 
 					return true;
@@ -581,7 +612,12 @@ bool checkCheckMate(Board& board, bool debug) {
 
 }
 
-
+/// <summary>
+/// load pieces
+/// </summary>
+/// <param name="pieces">pieces</param>
+/// <param name="programID">program id</param>
+/// <param name="board">board</param>
 void loadPieces(std::vector<Chess>& pieces, GLuint programID, Board& board) {
 
 	char buffer[21];
@@ -684,18 +720,29 @@ void loadPieces(std::vector<Chess>& pieces, GLuint programID, Board& board) {
 	
 }
 
-
+/// <summary>
+/// input thread function
+/// </summary>
 void inputThreadFunction() {
 	
 	while (1) {
 		if (!ReceiveCommand) {
-			std::cout << "Please enter a command: ";
-			std::getline(std::cin, InputCommand);
-			ReceiveCommand = true;
+			//if (showPrompt) {
+				std::cout << "Please enter a command: ";
+				std::getline(std::cin, InputCommand);
+				ReceiveCommand = true;
+			//}
+		
 		}
 	}
 }
 
+/// <summary>
+/// parse command
+/// </summary>
+/// <param name="board">board</param>
+/// <param name="programID">program ID</param>
+/// <returns>Command type</returns>
 CommandType ParseCommand(Board& board, GLuint programID) {
 	std::vector<std::string> words;
 	std::istringstream stream(InputCommand);
@@ -707,7 +754,6 @@ CommandType ParseCommand(Board& board, GLuint programID) {
 		words.push_back(word);
 	}
 
-	std::cout << "words.size(): " << words.size() << std::endl;
 
 	if (words[0] == "camera" && words.size() == 4) {
 		float polar = std::stof(words[1]);
@@ -724,7 +770,7 @@ CommandType ParseCommand(Board& board, GLuint programID) {
 			return Invalid;
 		}
 
-		std::cout << "camera polar is " << polar << " azimuthal is " << azimuthal << " radial is " << radial << std::endl;
+		//std::cout << "camera polar is " << polar << " azimuthal is " << azimuthal << " radial is " << radial << std::endl;
 		updateProjectionMatrix(polar, azimuthal, radial);
 		return Camera;
 	}
@@ -741,8 +787,21 @@ CommandType ParseCommand(Board& board, GLuint programID) {
 			std::cout << "Invalid command or move" << std::endl;
 			return Invalid;
 		}
-		std::cout << "light polar is " << polar << " azimuthal is " << azimuthal << " radial is " << radial << std::endl;
+		//std::cout << "light polar is " << polar << " azimuthal is " << azimuthal << " radial is " << radial << std::endl;
 		updateLightPos(polar, azimuthal, radial);
+		return Light;
+	}
+
+	else if (words[0] == "power" && words.size() == 2) {
+		float power = std::stof(words[1]);
+		
+
+		if (power < 0) {
+			std::cout << "Invalid command or move" << std::endl;
+			return Invalid;
+		}
+		//std::cout << "light polar is " << polar << " azimuthal is " << azimuthal << " radial is " << radial << std::endl;
+		updateLightPower(power);
 		return Light;
 	}
 
@@ -768,8 +827,8 @@ CommandType ParseCommand(Board& board, GLuint programID) {
 			return Invalid;
 		}
 
-		std::cout << "pair row :" << PosPairOriginal.first << " column: " << PosPairOriginal.second << std::endl;
-		std::cout << "pair2 row :" << PosPairFinal.first << " column: " << PosPairFinal.second << std::endl;
+		//std::cout << "pair row :" << PosPairOriginal.first << " column: " << PosPairOriginal.second << std::endl;
+		//std::cout << "pair2 row :" << PosPairFinal.first << " column: " << PosPairFinal.second << std::endl;
 		return Move;
 	
 	}
@@ -796,8 +855,8 @@ CommandType ParseCommand(Board& board, GLuint programID) {
 			return Invalid;
 		}
 
-		std::cout << "pair row :" << PosPairOriginal.first << " column: " << PosPairOriginal.second << std::endl;
-		std::cout << "pair2 row :" << PosPairFinal.first << " column: " << PosPairFinal.second << std::endl;
+		//std::cout << "pair row :" << PosPairOriginal.first << " column: " << PosPairOriginal.second << std::endl;
+		//std::cout << "pair2 row :" << PosPairFinal.first << " column: " << PosPairFinal.second << std::endl;
 		return MV;
 
 	}
@@ -824,7 +883,7 @@ CommandType ParseCommand(Board& board, GLuint programID) {
 			return Invalid;
 		}
 
-		std::cout << "pair row :" << PosPairOriginal.first << " column: " << PosPairOriginal.second << std::endl;
+		//std::cout << "pair row :" << PosPairOriginal.first << " column: " << PosPairOriginal.second << std::endl;
 		return Remove;
 
 	}
@@ -840,7 +899,9 @@ CommandType ParseCommand(Board& board, GLuint programID) {
 		return Restart;
 
 	}
-
+	else if (words[0] == "quit") {
+		return Quit;
+	}
 	else if (words[0] == "add" && words.size() == 2) {
 		char buffer[21];
 		if (words[1] == "queen_b") {
@@ -876,22 +937,22 @@ CommandType ParseCommand(Board& board, GLuint programID) {
 		else if (words[1] == "rook_w") {
 			std::sprintf(buffer, "Chess/rook_w_1.obj");
 			board.Coordinates[0][0].hasPiece = true;
-			board.Coordinates[0][0].Piece = new Pawn(buffer, programID, true, "woodlight1", "rook");
+			board.Coordinates[0][0].Piece = new Rook(buffer, programID, true, "woodlight1", "rook");
 		}
 		else if (words[1] == "rook_b") {
 			std::sprintf(buffer, "Chess/rook_b_1.obj");
 			board.Coordinates[7][7].hasPiece = true;
-			board.Coordinates[7][7].Piece = new Pawn(buffer, programID, false, "wooddark1", "rook");
+			board.Coordinates[7][7].Piece = new Rook(buffer, programID, false, "wooddark1", "rook");
 		}
 		else if (words[1] == "knight_w") {
 			std::sprintf(buffer, "Chess/knight_w_1.obj");
 			board.Coordinates[0][1].hasPiece = true;
-			board.Coordinates[0][1].Piece = new Pawn(buffer, programID, true, "woodlight2", "knight");
+			board.Coordinates[0][1].Piece = new Knight(buffer, programID, true, "woodlight2", "knight");
 		}
 		else if (words[1] == "knight_b") {
 			std::sprintf(buffer, "Chess/knight_b_1.obj");
 			board.Coordinates[7][6].hasPiece = true;
-			board.Coordinates[7][6].Piece = new Pawn(buffer, programID, false, "wooddark2", "knight");
+			board.Coordinates[7][6].Piece = new Knight(buffer, programID, false, "wooddark2", "knight");
 		}
 		else if (words[1] == "bishop_w") {
 			std::sprintf(buffer, "Chess/bishop_w_1.obj");
@@ -941,6 +1002,11 @@ CommandType ParseCommand(Board& board, GLuint programID) {
 	return Invalid;
 }
 
+/// <summary>
+/// convert to coordinate
+/// </summary>
+/// <param name="pos">pos</param>
+/// <returns></returns>
 std::pair<int, int> convertToCoordinate(std::string pos) {
 	
 	char row = pos[1];

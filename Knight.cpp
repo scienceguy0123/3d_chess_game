@@ -1,12 +1,34 @@
+/*
+Author: Hsueh-Yuan Chou
+Class: ECE6122
+Last Date Modified: 11/30/2024
+Description:
+What is the purpose of this file?
+knight CPP file
+*/
+
 #include "Knight.h"
 #include "RenderBoard.h"
 
-
+/// <summary>
+/// constructor
+/// </summary>
+/// <param name="path">path</param>
+/// <param name="programID">programID</param>
+/// <param name="color">color</param>
+/// <param name="MaterialName">MaterialName</param>
+/// <param name="PieceName">PieceName</param>
 Knight::Knight(char* path, GLuint programID, bool color, std::string MaterialName, std::string PieceName)
 	: Chess(path, programID, color, MaterialName, PieceName) {
 }
 
-
+/// <summary>
+/// Check move valid
+/// </summary>
+/// <param name="board">board</param>
+/// <param name="PosPairOriginal">PosPairOriginal</param>
+/// <param name="PosPairFinal">PosPairFinal</param>
+/// <returns>bool</returns>
 bool Knight::CheckMoveValid(Board& board, std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal) {
 	if (
 		(abs(PosPairOriginal.second - PosPairFinal.second) == 2

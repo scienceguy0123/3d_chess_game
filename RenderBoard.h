@@ -17,6 +17,7 @@ Class for Render board
 #include <glm/gtc/matrix_transform.hpp>
 #include "Coordinate.h"
 #include "Knight.h"
+#include "helper.h"
 
 /// <summary>
 /// class for board
@@ -56,15 +57,35 @@ struct Board {
 	/// <param name="ModelMatrixID">model matrix id</param>
 	void RenderBoard(glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint MatrixID, GLuint ViewMatrixID, GLuint ModelMatrixID);
 	
+	/// <summary>
+	/// create coordinates
+	/// </summary>
 	void CreateCoordinates();
 
+	/// <summary>
+	/// move pieces
+	/// </summary>
+	/// <param name="PosPairOriginal">PosPairOriginal</param>
+	/// <param name="PosPairFinal">PosPairFinal</param>
+	/// <returns></returns>
+	bool MovePiece(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal);
 
-	void MovePiece(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal);
-
+	/// <summary>
+	/// mv piece
+	/// </summary>
+	/// <param name="PosPairOriginal">PosPairOriginal</param>
+	/// <param name="PosPairFinal">PosPairFinal</param>
 	void MvPiece(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal);
 
+	/// <summary>
+	/// remove peice
+	/// </summary>
+	/// <param name="PosPairOriginal">PosPairOriginal</param>
 	void RemovePiece(std::pair<int, int>& PosPairOriginal);
 
+	/// <summary>
+	/// remove all
+	/// </summary>
 	void RemoveAll();
 
 	/// <summary>
@@ -76,6 +97,3 @@ struct Board {
 
 
 #endif
-
-/// a2 : x: -13.447, y : 18.948, z:1.8588
-/// a3 : x: -8.1179, y : 18.948, z:1.8588

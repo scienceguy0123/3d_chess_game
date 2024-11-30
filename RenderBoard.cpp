@@ -1,7 +1,19 @@
+/*
+Author: Hsueh-Yuan Chou
+Class: ECE6122
+Last Date Modified: 11/30/2024
+Description:
+What is the purpose of this file?
+render board CPP file
+*/
+
 #include "RenderBoard.h"
 
 
-
+/// <summary>
+/// constructor
+/// </summary>
+/// <param name="programID">program id</param>
 Board::Board(GLuint programID) {
 
 	bool res = loadAssImp("ChessBoard/chess_board.obj", this->indices, this->indexed_vertices, this->indexed_uvs, this->indexed_normals);
@@ -11,15 +23,7 @@ Board::Board(GLuint programID) {
 	glBindBuffer(GL_ARRAY_BUFFER, this->vertexbuffer);
 	glBufferData(GL_ARRAY_BUFFER, this->indexed_vertices.size() * sizeof(glm::vec3), &this->indexed_vertices[0], GL_STATIC_DRAW);
 
-	// Check for errors
-	GLenum err = glGetError();
-	if (err != GL_NO_ERROR) {
-		std::cerr << "RenderBoard glBufferData failed with error code: " << err << std::endl;
 
-	}
-	else {
-		std::cout << "RenderBoard main glBufferData succeeded!" << std::endl;
-	}
 
 	//GLuint uvbuffer;
 	glGenBuffers(1, &this->uvbuffer);
@@ -56,6 +60,9 @@ Board::Board(GLuint programID) {
 	
 }
 
+/// <summary>
+/// create coordinates
+/// </summary>
 void Board::CreateCoordinates() {
 	this->Coordinates[0][0] = Coordinate(0, 0, -18.852f, 1.8588f, 18.8363f); // a1
 	this->Coordinates[0][1] = Coordinate(0, 1, -18.9634f, 1.8588f, 13.4614f); // b1
@@ -129,81 +136,16 @@ void Board::CreateCoordinates() {
 	this->Coordinates[7][6] = Coordinate(7, 6, 18.9396f, 1.8588f, -13.4673f);
 	this->Coordinates[7][7] = Coordinate(7, 7, 19.3088f, 1.8588f, -19.3245f);
 
-	//this->Coordinates[0][0] = Coordinate(0, 0, -18.852, 18.8363, 1.8588); // a1
-	//this->Coordinates[0][1] = Coordinate(0, 1, -18.9634, 13.4614 , 1.8588); // b1
-	//this->Coordinates[0][2] = Coordinate(0, 2, -18.963, 8.10215, 1.8588);
-	//this->Coordinates[0][3] = Coordinate(0, 3, -18.963, 2.7026, 1.8588);
-	//this->Coordinates[0][4] = Coordinate(0, 4, -18.963, -2.7104, 1.8588);
-	//this->Coordinates[0][5] = Coordinate(0, 5, -18.963, -8.10995, 1.8588);
-	//this->Coordinates[0][6] = Coordinate(0, 6, -18.963, -13.4692, 1.8588);
-	//this->Coordinates[0][7] = Coordinate(0, 7, -18.963, -18.844, 1.8588);
-
-	//this->Coordinates[1][0] = Coordinate(1, 0, -13.4772, 18.9476, 1.8588); //a2
-	//this->Coordinates[1][1] = Coordinate(1, 1, -13.4753, 13.4596, 1.8588); //b2
-	//this->Coordinates[1][2] = Coordinate(1, 2, -13.4753, 8.1018, 1.8588);
-	//this->Coordinates[1][3] = Coordinate(1, 3, -13.4753, 2.7026, 1.8588);
-	//this->Coordinates[1][4] = Coordinate(1, 4, -13.4753, -2.7104, 1.8588);
-	//this->Coordinates[1][5] = Coordinate(1, 5, -13.4753, -8.1096, 1.8588);
-	//this->Coordinates[1][6] = Coordinate(1, 6, -13.4753, -13.4673, 1.8588);
-	//this->Coordinates[1][7] = Coordinate(1, 7, -13.4753, -18.9553, 1.8588);
-
-	//this->Coordinates[2][0] = Coordinate(2, 0, -8.11795 , 18.9476, 1.8588); //a3
-	//this->Coordinates[2][1] = Coordinate(2, 1, -8.1176, 13.4596, 1.8588); //b3
-	//this->Coordinates[2][2] = Coordinate(2, 2, -8.1176, 8.1018, 1.8588);
-	//this->Coordinates[2][3] = Coordinate(2, 3, -8.1176, 2.7026, 1.8588);
-	//this->Coordinates[2][4] = Coordinate(2, 4, -8.1176, -2.7104, 1.8588);
-	//this->Coordinates[2][5] = Coordinate(2, 5, -8.1176, -8.1096, 1.8588);
-	//this->Coordinates[2][6] = Coordinate(2, 6, -8.1176, -13.4673, 1.8588);
-	//this->Coordinates[2][7] = Coordinate(2, 7, -8.1176, -18.9553, 1.8588);
-
-	//this->Coordinates[3][0] = Coordinate(3, 0, -2.7184, 18.9476, 1.8588); //a4
-	//this->Coordinates[3][1] = Coordinate(3, 1, -2.7184, 13.4596, 1.8588); //b4
-	//this->Coordinates[3][2] = Coordinate(3, 2, -2.7184, 8.1018, 1.8588);
-	//this->Coordinates[3][3] = Coordinate(3, 3, -2.7184, 2.7026, 1.8588);
-	//this->Coordinates[3][4] = Coordinate(3, 4, -2.7184, -2.7104, 1.8588);
-	//this->Coordinates[3][5] = Coordinate(3, 5, -2.7184, -8.1096, 1.8588);
-	//this->Coordinates[3][6] = Coordinate(3, 6, -2.7184, -13.4673, 1.8588);
-	//this->Coordinates[3][7] = Coordinate(3, 7, -2.71846, -18.955, 1.8588);
-
-	//this->Coordinates[4][0] = Coordinate(4, 0, 2.6946, 18.9476, 1.8588); //a5
-	//this->Coordinates[4][1] = Coordinate(4, 1, 2.6946, 13.4596, 1.8588); //b5
-	//this->Coordinates[4][2] = Coordinate(4, 2, 2.6946, 8.1018, 1.8588);
-	//this->Coordinates[4][3] = Coordinate(4, 3, 2.6946, 2.7026, 1.8588);
-	//this->Coordinates[4][4] = Coordinate(4, 4, 2.6946, -2.7104, 1.8588);
-	//this->Coordinates[4][5] = Coordinate(4, 5, 2.6946, -8.1096, 1.8588);
-	//this->Coordinates[4][6] = Coordinate(4, 6, 2.6946, -13.4673, 1.8588);
-	//this->Coordinates[4][7] = Coordinate(4, 7, 2.6946, -18.955, 1.8588);
-
-	//this->Coordinates[5][0] = Coordinate(5, 0, 8.0942, 18.9476, 1.8588); //a6
-	//this->Coordinates[5][1] = Coordinate(5, 1, 8.0939, 13.4596, 1.8588); //b6
-	//this->Coordinates[5][2] = Coordinate(5, 2, 8.0939, 8.1018, 1.8588);
-	//this->Coordinates[5][3] = Coordinate(5, 3, 8.0939, 2.7026, 1.8588);
-	//this->Coordinates[5][4] = Coordinate(5, 4, 8.0939, -2.7104, 1.8588);
-	//this->Coordinates[5][5] = Coordinate(5, 5, 8.0939, -8.1096, 1.8588);
-	//this->Coordinates[5][6] = Coordinate(5, 6, 8.0939, -13.4673, 1.8588);
-	//this->Coordinates[5][7] = Coordinate(5, 7, 8.0939, -18.955, 1.8588);
-
-	//this->Coordinates[6][0] = Coordinate(6, 0, 13.4535, 18.9476, 1.8588); //a7
-	//this->Coordinates[6][1] = Coordinate(6, 1, 13.4516, 13.4596, 1.8588); //b7
-	//this->Coordinates[6][2] = Coordinate(6, 2, 13.4516, 8.1018, 1.8588);
-	//this->Coordinates[6][3] = Coordinate(6, 3, 13.4516, 2.7026, 1.8588);
-	//this->Coordinates[6][4] = Coordinate(6, 4, 13.4516, -2.7104, 1.8588);
-	//this->Coordinates[6][5] = Coordinate(6, 5, 13.4516, -8.1096, 1.8588);
-	//this->Coordinates[6][6] = Coordinate(6, 6, 13.4516, -13.4673, 1.8588);
-	//this->Coordinates[6][7] = Coordinate(6, 7, 13.4516, -18.955, 1.8588);
-
-	//this->Coordinates[7][0] = Coordinate(7, 0, 18.8283, 18.8363, 1.8588); //a8
-	//this->Coordinates[7][1] = Coordinate(7, 1, 18.9396, 13.4614, 1.8588); //b8
-	//this->Coordinates[7][2] = Coordinate(7, 2, 18.9396, 8.10215, 1.8588);
-	//this->Coordinates[7][3] = Coordinate(7, 3, 18.9396, 2.7026, 1.8588);
-	//this->Coordinates[7][4] = Coordinate(7, 4, 18.9396, -2.7104, 1.8588);
-	//this->Coordinates[7][5] = Coordinate(7, 5, 18.9396, -8.1096, 1.82588);
-	//this->Coordinates[7][6] = Coordinate(7, 6, 18.9396, -13.4673, 1.8588);
-	//this->Coordinates[7][7] = Coordinate(7, 7, 19.3088, -19.3245, 1.8588);
+	
 }
 	
-
-void Board::MovePiece(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal) {
+/// <summary>
+/// move pieces
+/// </summary>
+/// <param name="PosPairOriginal">PosPairOriginal</param>
+/// <param name="PosPairFinal">PosPairFinal</param>
+/// <returns>bool</returns>
+bool Board::MovePiece(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal) {
 	auto& OriginalCoordinate = this->Coordinates[PosPairOriginal.first][PosPairOriginal.second];
 	if (OriginalCoordinate.hasPiece) {
 		auto& FinalCoordiante = this->Coordinates[PosPairFinal.first][PosPairFinal.second];
@@ -211,15 +153,58 @@ void Board::MovePiece(std::pair<int, int>& PosPairOriginal, std::pair<int, int>&
 		if (FinalCoordiante.hasPiece) {
 			if (FinalCoordiante.Piece->color == OriginalCoordinate.Piece->color) {
 				std::cout << "Invalid command or move" << std::endl;
-				return;
+				return false;
 			}
 
 		}
 
 		if (!OriginalCoordinate.Piece->CheckMoveValid(*this, PosPairOriginal, PosPairFinal)) {
 			std::cout << "Invalid command or move" << std::endl;
-			return;
+			return false;
 		}
+
+		if (OriginalCoordinate.Piece->PieceName == "king"
+			&& OriginalCoordinate.Piece->color) {
+			if (checkUnderAttack(*this, PosPairFinal.first, PosPairFinal.second, true, true, false)) {
+				std::cout << "Invalid command or move" << std::endl;
+				return false;
+			}
+		}
+		else {
+			
+			for (int i = 0; i < 8; i++) {
+				for (int j = 0; j < 8; j++) {
+					auto& coor = Coordinates[i][j];
+					if (
+						coor.hasPiece
+						&& coor.Piece->PieceName == "king"
+						&& coor.Piece->color == true
+						) {
+						if (checkUnderAttack(*this, i, j, true, false, false)) {
+							this->Coordinates[PosPairOriginal.first][PosPairOriginal.second].Piece = std::move(this->Coordinates[PosPairFinal.first][PosPairFinal.second].Piece);
+
+							OriginalCoordinate.hasPiece = false;
+
+							FinalCoordiante.hasPiece = true;
+							if (checkUnderAttack(*this, i, j, true, false, false)) {
+								std::cout << "Invalid command or move" << std::endl;
+								return false;
+							}
+							this->Coordinates[PosPairFinal.first][PosPairFinal.second].Piece = std::move(this->Coordinates[PosPairOriginal.first][PosPairOriginal.second].Piece);
+
+							OriginalCoordinate.hasPiece = true;
+
+							FinalCoordiante.hasPiece = false;
+
+						}
+					}
+				}
+			}
+		
+		}
+
+		
+
 
 
 		this->Coordinates[PosPairFinal.first][PosPairFinal.second].Piece = std::move(this->Coordinates[PosPairOriginal.first][PosPairOriginal.second].Piece);
@@ -234,13 +219,20 @@ void Board::MovePiece(std::pair<int, int>& PosPairOriginal, std::pair<int, int>&
 		FinalCoordiante.Piece->TargetTranslateVector.y = FinalCoordiante.Piece->TargetTranslateVector.y + test.y;
 		//FinalCoordiante.Piece.TargetTranslateVector.x = FinalCoordiante.Piece.TargetTranslateVector + (FinalCoordiante - OriginalCoordinate);
 		FinalCoordiante.Piece->translating = true;
+
+		return true;
 	}
 	else {
 		std::cout<< "Invalid command or move" << std::endl;
+		return false;
 	}
 }
 
-
+/// <summary>
+/// Mv piece
+/// </summary>
+/// <param name="PosPairOriginal">PosPairOriginal</param>
+/// <param name="PosPairFinal">PosPairFinal</param>
 void Board::MvPiece(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal) {
 	auto& OriginalCoordinate = this->Coordinates[PosPairOriginal.first][PosPairOriginal.second];
 	if (OriginalCoordinate.hasPiece) {
@@ -273,6 +265,10 @@ void Board::MvPiece(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& P
 	}
 }
 
+/// <summary>
+/// remove piece
+/// </summary>
+/// <param name="PosPairOriginal">PosPairOriginal</param>
 void Board::RemovePiece(std::pair<int, int>& PosPairOriginal) {
 	auto& OriginalCoordinate = this->Coordinates[PosPairOriginal.first][PosPairOriginal.second];
 	if (OriginalCoordinate.hasPiece) {
@@ -283,6 +279,9 @@ void Board::RemovePiece(std::pair<int, int>& PosPairOriginal) {
 	}
 }
 
+/// <summary>
+/// remove all
+/// </summary>
 void Board::RemoveAll() {
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
@@ -293,6 +292,14 @@ void Board::RemoveAll() {
 	}
 }
 
+/// <summary>
+/// render board
+/// </summary>
+/// <param name="ProjectionMatrix">ProjectionMatrix</param>
+/// <param name="ViewMatrix">ViewMatrix</param>
+/// <param name="MatrixID">MatrixID</param>
+/// <param name="ViewMatrixID">ViewMatrixID</param>
+/// <param name="ModelMatrixID"ModelMatrixID></param>
 void Board::RenderBoard( glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuint MatrixID, GLuint ViewMatrixID, GLuint ModelMatrixID) {
 
 	
@@ -368,6 +375,9 @@ void Board::RenderBoard( glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, GLuin
 	
 }
 
+/// <summary>
+/// clean board
+/// </summary>
 void Board:: CleanBoard() {
 	glDeleteBuffers(1, &this->vertexbuffer);
 	glDeleteBuffers(1, &this->uvbuffer);

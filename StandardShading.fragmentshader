@@ -7,7 +7,6 @@ in vec3 Position_worldspace;
 in vec3 Normal_cameraspace;
 in vec3 EyeDirection_cameraspace;
 in vec3 LightDirection_cameraspace;
-
 // Output data
 out vec3 color;
 //out vec4 color;
@@ -21,13 +20,14 @@ uniform bool mode;
 uniform vec3 ambient;
 uniform vec3 diffuse;
 uniform vec3 specular;
+uniform float LightPower2;
 
 void main(){
 
 	// Light emission properties
 	// You probably want to put them as uniforms
 	vec3 LightColor = vec3(1,1,1);
-	float LightPower = 500.0f;
+	float LightPower = LightPower2;
 	
 	// Material properties
 	vec3 MaterialDiffuseColor = texture( myTextureSampler, UV ).rgb;

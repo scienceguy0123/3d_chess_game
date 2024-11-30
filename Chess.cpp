@@ -14,7 +14,14 @@ Chess::Chess() {};
 
 
 
-
+/// <summary>
+/// Constructor
+/// </summary>
+/// <param name="path">path</param>
+/// <param name="programID">program id</param>
+/// <param name="color">color</param>
+/// <param name="MaterialName">material name</param>
+/// <param name="PieceName">peice name</param>
 Chess::Chess(
 	std::string path,
 	GLuint programID,
@@ -75,12 +82,19 @@ Chess::Chess(
 	this->TargetTranslateVector = glm::vec3(0, 0, 0);
 }
 
+/// <summary>
+/// display
+/// </summary>
 void Chess::display() {
-	std::cout << "TargetTranslateVector.x: " << TargetTranslateVector.x << " TargetTranslateVector.y: " << TargetTranslateVector.y << " TargetTranslateVector.z: " << TargetTranslateVector.z << std::endl;
-	std::cout << "CurrentTranslateVector.x: " << CurrentTranslateVector.x << " CurrentTranslateVector.y: " << CurrentTranslateVector.y << " CurrentTranslateVector.z: " << CurrentTranslateVector.z << std::endl;
+	//std::cout << "TargetTranslateVector.x: " << TargetTranslateVector.x << " TargetTranslateVector.y: " << TargetTranslateVector.y << " TargetTranslateVector.z: " << TargetTranslateVector.z << std::endl;
+	//std::cout << "CurrentTranslateVector.x: " << CurrentTranslateVector.x << " CurrentTranslateVector.y: " << CurrentTranslateVector.y << " CurrentTranslateVector.z: " << CurrentTranslateVector.z << std::endl;
 
 }
 
+/// <summary>
+/// calculate Current translate vector
+/// </summary>
+/// <returns>bool</returns>
 bool Chess::calculateCurrentTranslateVector() {
 
 	//this->display();
@@ -105,23 +119,7 @@ bool Chess::calculateCurrentTranslateVector() {
 		XDone = true;
 	}
 
-	/*if (TargetTranslateVector.y < CurrentTranslateVector.y) {
-		CurrentTranslateVector.y -= Speed;
-		if (CurrentTranslateVector.y < TargetTranslateVector.y) {
-			CurrentTranslateVector.y = TargetTranslateVector.y;
-			YDone = true;
-		}
-	}
-	else if (TargetTranslateVector.y > CurrentTranslateVector.y) {
-		CurrentTranslateVector.y += Speed;
-		if (CurrentTranslateVector.y > TargetTranslateVector.y) {
-			CurrentTranslateVector.y = TargetTranslateVector.y;
-			YDone = true;
-		}
-	}*/
-	//else {
-	//	YDone = true;
-	//}
+	
 	
 	if (TargetTranslateVector.z < CurrentTranslateVector.z) {
 		//std::cout << "TargetTranslateVector.z: " << TargetTranslateVector.z << " CurrentTranslateVector.z: " << CurrentTranslateVector.z << std::endl;
@@ -146,7 +144,10 @@ bool Chess::calculateCurrentTranslateVector() {
 	return XDone && YDone && ZDone;
 }
 
-
+/// <summary>
+/// move constructor
+/// </summary>
+/// <param name="other">other</param>
 Chess::Chess(Chess&& other) noexcept :
 	indices(std::move(other.indices)),
 	indexed_vertices(std::move(other.indexed_vertices)),
@@ -172,6 +173,11 @@ Chess::Chess(Chess&& other) noexcept :
 
 	}
 
+/// <summary>
+///  move assignment
+/// </summary>
+/// <param name="other">other </param>
+/// <returns></returns>
 Chess& Chess::operator=(Chess&& other) noexcept {
 	if (this != &other) {
 		indices = std::move(other.indices);
@@ -199,9 +205,14 @@ Chess& Chess::operator=(Chess&& other) noexcept {
 }
 
 
-
+/// <summary>
+/// check move valid
+/// </summary>
+/// <param name="board">board</param>
+/// <param name="PosPairOriginal">PosPairOriginal</param>
+/// <param name="PosPairFinal">PosPairFinal</param>
+/// <returns>bool</returns>
 bool Chess::CheckMoveValid(Board& board, std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal) {
-	std::cout << "here2" << std::endl;
 	return true;
 }
 
@@ -298,7 +309,9 @@ void Chess::Render(int index, glm::mat4 ProjectionMatrix, glm::mat4 ViewMatrix, 
 
 };
 
-
+/// <summary>
+/// clean
+/// </summary>
 void Chess::clean() {
 	glDeleteBuffers(1, &this->vertexbuffer);
 	glDeleteBuffers(1, &this->uvbuffer);
@@ -307,7 +320,14 @@ void Chess::clean() {
 	glDeleteTextures(1, &this->Texture);
 };
 
-
+/// <summary>
+/// vertical move
+/// </summary>
+/// <param name="PosPairOriginal">PosPairOriginal</param>
+/// <param name="PosPairFinal">PosPairFinal</param>
+/// <param name="direction">direction</param>
+/// <param name="MaxStep">MaxStep</param>
+/// <returns></returns>
 bool Chess::VeriticalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal, int direction,  int MaxStep  ) {
 	//direction 1 is from black to white
 	// direction 2 is from white to black
@@ -320,7 +340,7 @@ bool Chess::VeriticalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, i
 	}
 	else {
 		if (direction == 1) {
-			std::cout << "black to white vertical move " << MaxStep << std::endl;
+			//std::cout << "black to white vertical move " << MaxStep << std::endl;
 
 			if (
 				abs(PosPairFinal.first - PosPairOriginal.first ) <= MaxStep
@@ -328,12 +348,12 @@ bool Chess::VeriticalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, i
 				) {
 				return true;
 			}
-			std::cout << "black to white vertical move return false " << MaxStep << std::endl;
+			//std::cout << "black to white vertical move return false " << MaxStep << std::endl;
 
 			return false;
 		}
 		else if (direction == 2) {
-			std::cout << "white to black vertical move " << std::endl;
+			//std::cout << "white to black vertical move " << std::endl;
 
 			if (
 				abs(PosPairFinal.first - PosPairOriginal.first) <= MaxStep
@@ -345,7 +365,7 @@ bool Chess::VeriticalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, i
 		}
 		else {
 			if (
-				abs(PosPairFinal.first - PosPairOriginal.first > MaxStep) > MaxStep
+				abs(PosPairFinal.first - PosPairOriginal.first ) > MaxStep
 				) {
 				return false;
 			}
@@ -355,6 +375,13 @@ bool Chess::VeriticalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, i
 	}
 };
 
+/// <summary>
+/// Horizontal move
+/// </summary>
+/// <param name="PosPairOriginal">PosPairOriginal</param>
+/// <param name="PosPairFinal">PosPairFinal</param>
+/// <param name="MaxStep">MaxStep</param>
+/// <returns></returns>
 bool Chess::HorizontalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal, int MaxStep) {
 	if (MaxStep == 0) {
 		if (PosPairFinal.first == PosPairOriginal.first) {
@@ -373,12 +400,20 @@ bool Chess::HorizontalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, 
 	
 }
 
+/// <summary>
+/// Diagnal Move
+/// </summary>
+/// <param name="PosPairOriginal">PosPairOriginal</param>
+/// <param name="PosPairFinal">PosPairFinal</param>
+/// <param name="direction">direction</param>
+/// <param name="MaxStep">MaxStep</param>
+/// <returns>bool</returns>
 bool Chess::DiagonalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal, int direction , int MaxStep ) {
 	// direction 0: only from black to white
 	// direction 1: only from white to black
 	// direction 2: all direction
-	std::cout << "PosPairOriginal.first: " << PosPairOriginal.first << " PosPairOriginal.second: " << PosPairOriginal.second << std::endl;
-	std::cout << "PosPairFinal.first: " << PosPairFinal.first << " PosPairFinal.second: " << PosPairFinal.second << std::endl;
+	//std::cout << "PosPairOriginal.first: " << PosPairOriginal.first << " PosPairOriginal.second: " << PosPairOriginal.second << std::endl;
+	//std::cout << "PosPairFinal.first: " << PosPairFinal.first << " PosPairFinal.second: " << PosPairFinal.second << std::endl;
 
 	if (direction == 1){
 		for (int i = 1; i < MaxStep + 1; i++) {
@@ -389,7 +424,7 @@ bool Chess::DiagonalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, in
 				(PosPairOriginal.first + i == PosPairFinal.first
 					&& PosPairOriginal.second - i == PosPairFinal.second)
 			) {
-				std::cout << "DiagonalMove d1 returns true" << std::endl;
+				//std::cout << "DiagonalMove d1 returns true" << std::endl;
 				return true;
 			}
 		}
@@ -404,7 +439,7 @@ bool Chess::DiagonalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, in
 				(PosPairOriginal.first - i == PosPairFinal.first
 					&& PosPairOriginal.second + i == PosPairFinal.second)
 				) {
-				std::cout << "DiagonalMove d0 returns true" << std::endl;
+				//std::cout << "DiagonalMove d0 returns true" << std::endl;
 				return true;
 			}
 		}
@@ -432,7 +467,13 @@ bool Chess::DiagonalMove(std::pair<int, int>& PosPairOriginal, std::pair<int, in
 	}
 }
 
-
+/// <summary>
+/// Piece in route
+/// </summary>
+/// <param name="board">board</param>
+/// <param name="PosPairOriginal">PosPairOriginal</param>
+/// <param name="PosPairFinal">PosPairFinal</param>
+/// <returns>bool</returns>
 bool Chess::PieceInRoute(Board& board, std::pair<int, int>& PosPairOriginal, std::pair<int, int>& PosPairFinal) {
 	int i = 0;
 
@@ -473,7 +514,7 @@ bool Chess::PieceInRoute(Board& board, std::pair<int, int>& PosPairOriginal, std
 			currentY += IncrementY;
 		}
 
-		std::cout << "PieceInRoute currentX: " << currentX << " currentY: " << currentY << std::endl;
+		//std::cout << "PieceInRoute currentX: " << currentX << " currentY: " << currentY << std::endl;
 
 
 		if (

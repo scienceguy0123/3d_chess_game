@@ -17,7 +17,6 @@ Class for Chess
 #include <glm/gtc/matrix_transform.hpp>
 #include <GLFW/glfw3.h>
 #include "common/texture.hpp"
-
 #include <utility>
 // Parent class Chess
 
